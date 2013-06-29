@@ -369,31 +369,52 @@ minetest.register_node("nether:brick", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-local function replace(old, new)
-	for i=1,8 do
-		minetest.register_ore({
-			ore_type       = "scatter",
-			ore            = new,
-			wherein        = old,
-			clust_scarcity = 1,
-			clust_num_ores = 1,
-			clust_size     = 1,
-			height_min     = -31000,
-			height_max     = NETHER_DEPTH,
-		})
-	end
-end
+local ids = {
+	air = minetest.get_content_id("air"),
+	stone_with_coal = minetest.get_content_id("default:stone_with_coal"),
+	stone_with_iron = minetest.get_content_id("default:stone_with_iron"),
+	stone_with_mese = minetest.get_content_id("default:stone_with_mese"),
+	stone_with_diamond = minetest.get_content_id("default:stone_with_diamond"),
+	stone_with_gold = minetest.get_content_id("default:stone_with_gold"),
+	stone_with_copper = minetest.get_content_id("default:stone_with_copper"),
+	gravel = minetest.get_content_id("default:gravel"),
+	dirt = minetest.get_content_id("default:dirt"),
+	sand = minetest.get_content_id("default:sand"),
+	cobble = minetest.get_content_id("default:cobble"),
+	mossycobble = minetest.get_content_id("default:mossycobble"),
+	stair_cobble = minetest.get_content_id("stairs:stair_cobble"),
+	lava_source = minetest.get_content_id("default:lava_source"),
+	glowstone = minetest.get_content_id("nether:glowstone"),
+	nethersand = minetest.get_content_id("nether:sand"),
+	netherbrick = minetest.get_content_id("nether:brick"),
+	netherrack = minetest.get_content_id("nether:rack")
+}
 
-replace("default:stone", "nether:rack")
-replace("default:stone_with_coal", "air")
-replace("default:stone_with_iron", "air")
-replace("default:stone_with_mese", "default:lava_source")
-replace("default:stone_with_diamond", "default:lava_source")
-replace("default:stone_with_gold", "nether:glowstone")
-replace("default:stone_with_copper", "nether:sand")
-replace("default:gravel", "nether:sand")
-replace("default:dirt", "nether:sand")
-replace("default:sand", "nether:sand")
-replace("default:cobble", "nether:brick")
-replace("default:mossycobble", "nether:brick")
-replace("stairs:stair_cobble", "nether:brick")
+minetest.register_on_generated(function(minp, maxp, seed)
+	if maxp.y > NETHER_DEPTH then
+		return
+	end
+	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
+	local data = vm:get_data()
+	for i,d in ipairs(data) do
+		if d == ids.air or d == ids.stone_with_coal or d == ids.stone_with_iron then
+			data[i] = ids.air
+		elseif d == ids.stone_with_mese or d == ids.stone_with_diamond then
+			data[i] = ids.lava_source
+		elseif d == ids.stone_with_gold then
+			data[i] = ids.glowstone
+		elseif d == ids.stone_with_copper or d == ids.gravel or d == ids.dirt or d == ids.sand then
+			data[i] = ids.nethersand
+		elseif d == ids.cobble or d == ids.mossycobble or d == ids.stair_cobble then
+			data[i] = ids.netherbrick
+		else
+			data[i] = ids.netherrack
+		end
+	end
+	vm:set_data(data)
+	-- ehm, hmmmm said the following has to be like this
+	vm:set_lighting({x=emin.x, y=minp.y, z=emin.z}, {x=emax.x, y=maxp.y, z=emax.z}, {day=0, night=0})
+	vm:calc_lighting({x=emin.x, y=minp.y, z=emin.z}, {x=emax.x, y=maxp.y, z=emax.z})
+	vm:update_liquids()
+	vm:write_to_map()
+end)
