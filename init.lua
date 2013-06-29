@@ -384,6 +384,7 @@ local ids = {
 	mossycobble = minetest.get_content_id("default:mossycobble"),
 	stair_cobble = minetest.get_content_id("stairs:stair_cobble"),
 	lava_source = minetest.get_content_id("default:lava_source"),
+	lava_flowing = minetest.get_content_id("default:lava_flowing"),
 	glowstone = minetest.get_content_id("nether:glowstone"),
 	nethersand = minetest.get_content_id("nether:sand"),
 	netherbrick = minetest.get_content_id("nether:brick"),
@@ -399,8 +400,10 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	for i,d in ipairs(data) do
 		if d == ids.air or d == ids.stone_with_coal or d == ids.stone_with_iron then
 			data[i] = ids.air
-		elseif d == ids.stone_with_mese or d == ids.stone_with_diamond then
+		elseif d == ids.stone_with_mese or d == ids.stone_with_diamond or d == ids.lava_source then
 			data[i] = ids.lava_source
+		elseif d == lava_flowing then
+			-- nothing
 		elseif d == ids.stone_with_gold then
 			data[i] = ids.glowstone
 		elseif d == ids.stone_with_copper or d == ids.gravel or d == ids.dirt or d == ids.sand then
