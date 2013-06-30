@@ -415,9 +415,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		end
 	end
 	vm:set_data(data)
-	-- ehm, hmmmm said the following has to be like this
-	vm:set_lighting({x=emin.x, y=minp.y, z=emin.z}, {x=emax.x, y=maxp.y, z=emax.z}, {day=0, night=0})
-	vm:calc_lighting({x=emin.x, y=minp.y, z=emin.z}, {x=emax.x, y=maxp.y, z=emax.z})
+	--vm:set_lighting({day=0, night=0})
+	vm:calc_lighting()
 	vm:update_liquids()
 	vm:write_to_map()
 end)
