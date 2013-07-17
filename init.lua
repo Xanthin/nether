@@ -395,7 +395,9 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	end
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local data = vm:get_data()
-	for i,d in ipairs(data) do
+	local area = VoxelArea:new{MinEdge=emin, MaxEdge=emax}
+	for i in area:iterp(minp, maxp) do
+		local d = data[i]
 		if d == air or d == stone_with_coal or d == stone_with_iron then
 			data[i] = air
 		elseif d == stone_with_mese or d == stone_with_diamond or d == lava_source then
