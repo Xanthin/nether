@@ -369,27 +369,25 @@ minetest.register_node("nether:brick", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-local ids = {
-	air = minetest.get_content_id("air"),
-	stone_with_coal = minetest.get_content_id("default:stone_with_coal"),
-	stone_with_iron = minetest.get_content_id("default:stone_with_iron"),
-	stone_with_mese = minetest.get_content_id("default:stone_with_mese"),
-	stone_with_diamond = minetest.get_content_id("default:stone_with_diamond"),
-	stone_with_gold = minetest.get_content_id("default:stone_with_gold"),
-	stone_with_copper = minetest.get_content_id("default:stone_with_copper"),
-	gravel = minetest.get_content_id("default:gravel"),
-	dirt = minetest.get_content_id("default:dirt"),
-	sand = minetest.get_content_id("default:sand"),
-	cobble = minetest.get_content_id("default:cobble"),
-	mossycobble = minetest.get_content_id("default:mossycobble"),
-	stair_cobble = minetest.get_content_id("stairs:stair_cobble"),
-	lava_source = minetest.get_content_id("default:lava_source"),
-	lava_flowing = minetest.get_content_id("default:lava_flowing"),
-	glowstone = minetest.get_content_id("nether:glowstone"),
-	nethersand = minetest.get_content_id("nether:sand"),
-	netherbrick = minetest.get_content_id("nether:brick"),
-	netherrack = minetest.get_content_id("nether:rack")
-}
+local air = minetest.get_content_id("air")
+local stone_with_coal = minetest.get_content_id("default:stone_with_coal")
+local stone_with_iron = minetest.get_content_id("default:stone_with_iron")
+local stone_with_mese = minetest.get_content_id("default:stone_with_mese")
+local stone_with_diamond = minetest.get_content_id("default:stone_with_diamond")
+local stone_with_gold = minetest.get_content_id("default:stone_with_gold")
+local stone_with_copper = minetest.get_content_id("default:stone_with_copper")
+local gravel = minetest.get_content_id("default:gravel")
+local dirt = minetest.get_content_id("default:dirt")
+local sand = minetest.get_content_id("default:sand")
+local cobble = minetest.get_content_id("default:cobble")
+local mossycobble = minetest.get_content_id("default:mossycobble")
+local stair_cobble = minetest.get_content_id("stairs:stair_cobble")
+local lava_source = minetest.get_content_id("default:lava_source")
+local lava_flowing = minetest.get_content_id("default:lava_flowing")
+local glowstone = minetest.get_content_id("nether:glowstone")
+local nethersand = minetest.get_content_id("nether:sand")
+local netherbrick = minetest.get_content_id("nether:brick")
+local netherrack = minetest.get_content_id("nether:rack")
 
 minetest.register_on_generated(function(minp, maxp, seed)
 	if maxp.y > NETHER_DEPTH then
@@ -398,20 +396,20 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local data = vm:get_data()
 	for i,d in ipairs(data) do
-		if d == ids.air or d == ids.stone_with_coal or d == ids.stone_with_iron then
-			data[i] = ids.air
-		elseif d == ids.stone_with_mese or d == ids.stone_with_diamond or d == ids.lava_source then
-			data[i] = ids.lava_source
+		if d == air or d == stone_with_coal or d == stone_with_iron then
+			data[i] = air
+		elseif d == stone_with_mese or d == stone_with_diamond or d == lava_source then
+			data[i] = lava_source
 		elseif d == lava_flowing then
 			-- nothing
-		elseif d == ids.stone_with_gold then
-			data[i] = ids.glowstone
-		elseif d == ids.stone_with_copper or d == ids.gravel or d == ids.dirt or d == ids.sand then
-			data[i] = ids.nethersand
-		elseif d == ids.cobble or d == ids.mossycobble or d == ids.stair_cobble then
-			data[i] = ids.netherbrick
+		elseif d == stone_with_gold then
+			data[i] = glowstone
+		elseif d == stone_with_copper or d == gravel or d == dirt or d == sand then
+			data[i] = nethersand
+		elseif d == cobble or d == mossycobble or d == stair_cobble then
+			data[i] = netherbrick
 		else
-			data[i] = ids.netherrack
+			data[i] = netherrack
 		end
 	end
 	vm:set_data(data)
