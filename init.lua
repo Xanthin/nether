@@ -1,9 +1,17 @@
 -- Minetest 0.4 Mod: Nether
 
+-- Boilerplate to support localized strings if intllib mod is installed.
+local S
+if intllib then
+	S = intllib.Getter()
+else
+	S = function(s) return s end
+end
+
 local NETHER_DEPTH = -5000
 
 minetest.register_node("nether:portal", {
-	description = "Nether Portal",
+	description = S("Nether Portal"),
 	tiles = {
 		"nether_transparent.png",
 		"nether_transparent.png",
@@ -256,7 +264,7 @@ local function make_portal(pos)
 end
 
 minetest.register_node(":default:obsidian", {
-	description = "Obsidian",
+	description = S("Obsidian"),
 	tiles = {"default_obsidian.png"},
 	is_ground_content = true,
 	sounds = default.node_sound_stone_defaults(),
@@ -315,7 +323,7 @@ minetest.register_node(":default:obsidian", {
 })
 
 minetest.register_craftitem(":default:mese_crystal_fragment", {
-	description = "Mese Crystal Fragment",
+	description = S("Mese Crystal Fragment"),
 	inventory_image = "default_mese_crystal_fragment.png",
 	on_place = function(stack,_, pt)
 		if pt.under and minetest.get_node(pt.under).name == "default:obsidian" then
@@ -329,7 +337,7 @@ minetest.register_craftitem(":default:mese_crystal_fragment", {
 })
 
 minetest.register_node("nether:rack", {
-	description = "Netherrack",
+	description = S("Netherrack"),
 	tiles = {"nether_rack.png"},
 	is_ground_content = true,
 	drop = {
@@ -344,7 +352,7 @@ minetest.register_node("nether:rack", {
 })
 
 minetest.register_node("nether:sand", {
-	description = "Nethersand",
+	description = S("Nethersand"),
 	tiles = {"nether_sand.png"},
 	is_ground_content = true,
 	groups = {crumbly=3,level=2,falling_node=1},
@@ -354,7 +362,7 @@ minetest.register_node("nether:sand", {
 })
 
 minetest.register_node("nether:glowstone", {
-	description = "Glowstone",
+	description = S("Glowstone"),
 	tiles = {"nether_glowstone.png"},
 	is_ground_content = true,
 	light_source = 13,
@@ -363,7 +371,7 @@ minetest.register_node("nether:glowstone", {
 })
 
 minetest.register_node("nether:brick", {
-	description = "Nether Brick",
+	description = S("Nether Brick"),
 	tiles = {"nether_brick.png"},
 	groups = {cracky=2,level=2},
 	sounds = default.node_sound_stone_defaults(),
