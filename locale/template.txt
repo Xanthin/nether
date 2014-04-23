@@ -1,0 +1,9 @@
+# Template
+
+Nether Portal = 
+Obsidian = 
+Mese Crystal Fragment = 
+Netherrack = 
+Nethersand = 
+Glowstone = 
+Nether Brick = 
