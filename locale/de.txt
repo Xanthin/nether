@@ -1,0 +1,9 @@
+# Translation by Xanthin
+
+Nether Portal = Unterweltportal
+Obsidian = Obsidian
+Mese Crystal Fragment = Mesekristallsplitter
+Netherrack = Unterweltstein
+Nethersand = Unterweltsand
+Glowstone = Leuchtstein
+Nether Brick = Unterweltziegel
